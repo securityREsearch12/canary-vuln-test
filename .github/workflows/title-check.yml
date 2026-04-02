@@ -1,0 +1,14 @@
+name: Title Check
+on:
+  pull_request_target:
+    types: [opened, edited]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          title="${{ github.event.pull_request.title }}"
+          if [[ ! "$title" =~ ^(feat|fix|docs): ]]; then
+            echo "Bad title format"
+            exit 1
+          fi
